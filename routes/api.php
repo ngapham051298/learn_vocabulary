@@ -17,5 +17,6 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 Route::group(['prefix' => 'common'], function () {
-    Route::post('login', 'Auth\LoginController@login')->name('Login');
+    Route::post('login', 'Auth\LoginController@login')->name('login');
+    Route::post('register', 'Auth\RegisterController@create')->name('register');
 });
