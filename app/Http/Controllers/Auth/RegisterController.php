@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Common\StatusCode;
 use App\Http\Requests\UserFormRequest;
+
 class RegisterController extends Controller
 {
     /*
@@ -31,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -44,7 +45,11 @@ class RegisterController extends Controller
     }
     public function create(UserFormRequest $request)
     {
-        $user = User::create($request->all());
-        return $this->successResponse(null, StatusCode::CREATED);
+        try {
+            $user = User::create($request->all());
+            return $this->successResponse(null, StatusCode::CREATED);
+        } catch (Exception $e) {
+            return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
+        }
     }
 }
