@@ -14,4 +14,10 @@ class UserController extends Controller
         $user= Auth::user();
         return $this->successResponse($user, StatusCode::OK);
     }
+    public function update(Request $request){
+        $user = Auth::user();
+        $user->update($request->all());
+        $user->save();
+        return $this->successResponse(null, StatusCode::CREATED);
+    }
 }
