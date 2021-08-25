@@ -44,7 +44,7 @@ class LoginController extends Controller
         $email = $request->input('email');
         $password= $request->input('password');
             if(Auth::attempt(['email'=>$email, 'password' =>$password])){ 
-            $user= User::all(); 
+            $user= Auth::user(); 
             $token = Auth::user()->createToken('MyApp')->accessToken;
             return $this->successResponse([$user, $token],StatusCode::CREATED);
         } else {
