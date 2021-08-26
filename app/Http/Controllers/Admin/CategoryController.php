@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         try {
-            $category = Category::all();
+            $category = Category::with('words')->get();
             return $this->successResponse($category, StatusCode::OK);
         } catch (Exception $e) {
             return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
