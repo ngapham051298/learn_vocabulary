@@ -25,3 +25,6 @@ Route::group(['prefix' => 'common'], function () {
         Route::put('change-password', 'Auth\ChangePasswordController@changePassword')->name('changePassword');
     });
 });
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:api', 'admin']], function () {
+    Route::resource('categories', 'Admin\CategoryController');
+});
