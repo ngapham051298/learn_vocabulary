@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Common\StatusCode;
+
 class LoginController extends Controller
 {
     /*
@@ -29,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-   // protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -40,15 +41,20 @@ class LoginController extends Controller
     // {
     //     $this->middleware('guest')->except('logout');
     // }
-    public function login(Request $request){
-        $email = $request->input('email');
-        $password= $request->input('password');
-            if(Auth::attempt(['email'=>$email, 'password' =>$password])){ 
-            $user= Auth::user(); 
-            $token = Auth::user()->createToken('MyApp')->accessToken;
-            return $this->successResponse([$user, $token],StatusCode::CREATED);
-        } else {
-            return $this->errorResponse('UnAuthorised',StatusCode::UNAUTHORIZED);
+    public function login(Request $request)
+    {
+        try {
+            $email = $request->input('email');
+            $password = $request->input('password');
+            if (Auth::attempt(['email' => $email, 'password' => $password])) {
+                $user = Auth::user();
+                $token = Auth::user()->createToken('MyApp')->accessToken;
+                return $this->successResponse([$user, $token], StatusCode::CREATED);
+            } else {
+                return $this->errorResponse('UnAuthorised', StatusCode::UNAUTHORIZED);
+            }
+        } catch (Exception $e) {
+            return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
         }
     }
 }
