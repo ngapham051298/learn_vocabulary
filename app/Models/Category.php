@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    public function lessons(){
+    protected $guarded = ['id'];
+    public function lessons()
+    {
         return $this->hasMany(Lesson::class);
     }
-    public function words(){
+    public function words()
+    {
         return $this->belongsToMany(Word::class);
     }
     public function log()
