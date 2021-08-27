@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Answer extends Model
 {
     protected $guarded = ['id'];
-    public function lesson_results(){
+    public function lesson_results()
+    {
         return $this->hasMany(LessonResult::class);
     }
-    public function word(){
+    public function word()
+    {
         return $this->belongsTo(Word::class);
     }
 }
