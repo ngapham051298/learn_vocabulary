@@ -7,10 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use Notifiable,HasApiTokens;
+    use Notifiable, HasApiTokens, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -36,13 +37,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function logs(){
+    public function logs()
+    {
         return $this->hasMany(Log::class);
     }
-    public function lessons(){
+    public function lessons()
+    {
         return $this->hasMany(Lesson::class);
     }
-    public function setPasswordAttribute($password){
-        $this->attributes['password']= Hash::make($password);
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = Hash::make($password);
     }
 }

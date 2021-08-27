@@ -43,7 +43,8 @@ class CategoryController extends Controller
     public function show($id)
     {
         try {
-            $category = Category::findOrFail($id)->with('words')->get();
+            $category = Category::findOrFail($id);
+            $category->words;
             return $this->successResponse($category, StatusCode::OK);
         } catch (Exception $e) {
             return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
@@ -86,6 +87,13 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $category = Category::findOrFail($id);
+            $category->words()->detach();
+            $category->delete();
+            return $this->successResponse(null, StatusCode::OK);
+        } catch (Exception $e) {
+            return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
+        }
     }
 }
