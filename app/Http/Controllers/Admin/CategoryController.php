@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Common\StatusCode;
+use Exception;
 
 class CategoryController extends Controller
 {
@@ -69,7 +70,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $category = Category::findOrFail($id)->update($request->all());
+            return $this->successResponse(null, StatusCode::CREATED);
+        } catch (Exception $e) {
+            return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
+        }
     }
 
     /**
