@@ -41,7 +41,12 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $category = Category::findOrFail($id)->with('words')->get();
+            return $this->successResponse($category, StatusCode::OK);
+        } catch (Exception $e) {
+            return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
+        }
     }
 
     /**
