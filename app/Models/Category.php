@@ -21,4 +21,14 @@ class Category extends Model
     {
         return $this->morphOne(Log::class, 'logable');
     }
+    public static function createCategory($request)
+    {
+        $category = new Category();
+        $image   = $request->file('image');
+        $imageName = time() . '_' . $image->getClientOriginalName();
+        $request->image->move(public_path('Uploads/image'), $imageName);
+        $category->name = $request->name;
+        $category->image = $imageName;
+        $category->save();
+    }
 }

@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Common\StatusCode;
 use Exception;
+use App\Http\Requests\CategoryFormRequest;
 
 class CategoryController extends Controller
 {
@@ -24,10 +25,10 @@ class CategoryController extends Controller
             return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
         }
     }
-    public function store(Request $request)
+    public function store(CategoryFormRequest $request)
     {
         try {
-            $category = Category::create($request->all());
+            Category::createCategory($request);
             return $this->successResponse(null, StatusCode::CREATED);
         } catch (Exception $e) {
             return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);

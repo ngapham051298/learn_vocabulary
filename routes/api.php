@@ -27,4 +27,5 @@ Route::group(['prefix' => 'common'], function () {
 });
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:api', 'admin']], function () {
     Route::resource('categories', 'Admin\CategoryController');
+    Route::resource('words', 'Admin\WordController');
 });
