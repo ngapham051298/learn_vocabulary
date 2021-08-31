@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Word extends Model
 {
     use SoftDeletes;
+
     protected $guarded = ['id'];
     public function answers()
     {
@@ -42,5 +43,15 @@ class Word extends Model
             array_push($answers, $answer);
         }
         Answer::insert($answers);
+    }
+    public static function getWords($request)
+    {
+        $words = Word::with('answers')
+            ->join('category_word as cw', 'words.id', 'cw.word_id')
+            ->join('categories as c', 'c.id', 'cw.category_id')
+            ->where('c.id', $request->category_id)
+            ->select('words.id', 'words.name', 'words.audio')
+            ->get();
+        return $words;
     }
 }
