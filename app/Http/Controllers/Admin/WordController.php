@@ -8,6 +8,7 @@ use App\Models\Word;
 use App\Common\StatusCode;
 use Exception;
 use App\Http\Requests\WordFormRequest;
+use App\Http\Requests\SearchWordFormRequest;
 use Illuminate\Support\Facades\DB;
 
 class WordController extends Controller
@@ -17,9 +18,14 @@ class WordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(SearchWordFormRequest $request)
     {
-        //
+        try {
+            $words = Word::getWords($request);
+            return $this->successResponse($words, StatusCode::OK);
+        } catch (Exception $e) {
+            return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
+        }
     }
 
     /**
@@ -59,7 +65,7 @@ class WordController extends Controller
      */
     public function show($id)
     {
-        //
+       //
     }
 
     /**
