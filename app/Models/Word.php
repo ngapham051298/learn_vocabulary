@@ -11,7 +11,7 @@ class Word extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+    protected $hidden = ['pivot', 'created_at', 'updated_at', 'deleted_at'];
     public function answers()
     {
         return $this->hasMany(Answer::class);
@@ -66,5 +66,24 @@ class Word extends Model
             ])
             ->first();
         return $word;
+    }
+    public static function updateWord($id, $request)
+    {
+        $word = Word::findOrFail($id);
+        $word->name = $request->name;
+        if ($request->hasFile('audio')) {
+            $audio   = $request->file('audio');
+            $audioName = time() . ' ' . $audio->getClientOriginalName();
+            $request->audio->move(public_path('Uploads/audio'), $audioName);
+            $word->audio = $audioName;
+        }
+        $word->save();
+        $word->categories()->sync($request->category_ids);
+        foreach (json_decode($request->answers) as $item) {
+            Answer::find($item->id)->update([
+                'title' => $item->title,
+                'status' => $item->status
+            ]);
+        }
     }
 }

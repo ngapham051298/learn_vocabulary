@@ -91,9 +91,17 @@ class WordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(WordFormRequest $request, $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $word = Word::updateWord($id, $request);
+            DB::commit();
+            return $this->successResponse(null, StatusCode::CREATED);
+        } catch (Exception $e) {
+            DB::rollback();
+            return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
+        }
     }
 
     /**
