@@ -9,6 +9,7 @@ class Category extends Model
 {
     use SoftDeletes;
     protected $guarded = ['id'];
+    protected $hidden = ['pivot', 'created_at', 'updated_at', 'deleted_at'];
     public function lessons()
     {
         return $this->hasMany(Lesson::class);
