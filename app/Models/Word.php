@@ -11,6 +11,7 @@ class Word extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
     public function answers()
     {
         return $this->hasMany(Answer::class);
@@ -53,5 +54,17 @@ class Word extends Model
             ->select('words.id', 'words.name', 'words.audio')
             ->get();
         return $words;
+    }
+    public static function showWord($id)
+    {
+        $word = Word::where('id', $id)
+            ->with([
+                'categories' => function ($q) {
+                    $q->select('categories.id', 'categories.name', 'categories.image');
+                },
+                'answers'
+            ])
+            ->first();
+        return $word;
     }
 }

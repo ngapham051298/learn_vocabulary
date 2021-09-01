@@ -65,7 +65,12 @@ class WordController extends Controller
      */
     public function show($id)
     {
-       //
+        try {
+            $word = Word::showWord($id);
+            return $this->successResponse($word, StatusCode::OK);
+        } catch (Exception $e) {
+            return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
+        }
     }
 
     /**
