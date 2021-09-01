@@ -32,4 +32,16 @@ class Category extends Model
         $category->image = $imageName;
         $category->save();
     }
+    public static function updateCategory($request, $id)
+    {
+        $category = Category::findOrFail($id);
+        $category->name = $request->name;
+        if ($request->hasFile('image')) {
+            $image   = $request->file('image');
+            $imageName = time() . ' ' . $image->getClientOriginalName();
+            $request->image->move(public_path('Uploads/image'), $imageName);
+            $category->image = $imageName;
+        }
+        $category->save();
+    }
 }

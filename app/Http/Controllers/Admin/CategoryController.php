@@ -70,10 +70,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryFormRequest $request, $id)
     {
         try {
-            $category = Category::findOrFail($id)->update($request->all());
+            $category = Category::updateCategory($request, $id);
             return $this->successResponse(null, StatusCode::CREATED);
         } catch (Exception $e) {
             return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
