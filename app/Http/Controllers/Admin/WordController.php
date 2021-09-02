@@ -112,6 +112,11 @@ class WordController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $word = Word::deleteWord($id);
+            return $this->successResponse(null, StatusCode::OK);
+        } catch (Exception $e) {
+            return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
+        }
     }
 }
