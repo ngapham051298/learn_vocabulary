@@ -86,4 +86,11 @@ class Word extends Model
             ]);
         }
     }
+    public static function deleteWord($id)
+    {
+        $word = Word::findOrFail($id);
+        $word->categories()->detach();
+        $word->answers()->delete();
+        $word->delete();
+    }
 }
