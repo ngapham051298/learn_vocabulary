@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'role',
+        'password', 'remember_token', 'role', 'email_verified_at', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     /**
@@ -62,5 +62,10 @@ class User extends Authenticatable
         $request->image->move(public_path('Uploads/image/user'), $nameImage);
         $user->image = $nameImage;
         $user->save();
+    }
+    public static function getUsers()
+    {
+        $users = User::all();
+        return $users;
     }
 }
