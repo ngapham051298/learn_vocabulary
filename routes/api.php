@@ -30,4 +30,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:api', 'admin']], funct
     Route::post('categories/{id}', 'Admin\CategoryController@update');
     Route::resource('words', 'Admin\WordController');
     Route::post('words/{id}', 'Admin\WordController@update');
+    Route::resource('users', 'Admin\UserController');
 });

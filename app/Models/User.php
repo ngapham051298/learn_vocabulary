@@ -49,4 +49,18 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = Hash::make($password);
     }
+    public static function createUser($request)
+    {
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->gender = $request->gender;
+        $user->phone = $request->phone;
+        $image = $request->file('image');
+        $nameImage = time() . ' ' . $image->getClientOriginalName();
+        $request->image->move(public_path('Uploads/image/user'), $nameImage);
+        $user->image = $nameImage;
+        $user->save();
+    }
 }
