@@ -8,22 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-trait ApiResponse{
+trait ApiResponse
+{
 
-    protected function successResponse($data,$code)
+	protected function successResponse($data, $code)
 	{
 		return response()->json([
-			'status'=> true, 
-			'message' => 'success', 
+			'status' => true,
+			'message' => 'success',
 			'data' => $data,
-		],$code);
+		], $code);
 	}
 
-	protected function errorResponse($message = null,$code)
+	protected function errorResponse($message = null, $code)
 	{
 		return response()->json([
-			'status'=> false,
+			'status' => false,
 			'message' => $message,
-		],$code);
+		], $code);
 	}
 }

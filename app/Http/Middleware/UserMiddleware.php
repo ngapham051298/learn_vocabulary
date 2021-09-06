@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Middleware;
+
 use Illuminate\Support\Facades\Auth;
 use App\Common\StatusCode;
 use App\Traits\ApiResponse;
-
 use Closure;
 
 class UserMiddleware
 {
+    use ApiResponse;
     /**
      * Handle an incoming request.
      *
