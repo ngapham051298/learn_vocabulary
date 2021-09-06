@@ -59,7 +59,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $user = User::showUser($id);
+            return $this->successResponse($user, StatusCode::CREATED);
+        } catch (Exception $e) {
+            return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
+        }
     }
 
     /**

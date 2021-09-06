@@ -68,4 +68,9 @@ class User extends Authenticatable
         $users = User::all();
         return $users;
     }
+    public static function showUser($id)
+    {
+        $user = User::findOrFail($id);
+        return $user;
+    }
 }
