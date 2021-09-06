@@ -17,7 +17,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $users = User::getUsers();
+            return $this->successResponse($users, StatusCode::OK);
+        } catch (Exception $e) {
+            return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
+        }
     }
 
     /**
