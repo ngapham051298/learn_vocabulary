@@ -73,4 +73,19 @@ class User extends Authenticatable
         $user = User::findOrFail($id);
         return $user;
     }
+    public static function updateUser($request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->gender = $request->gender;
+        $user->phone = $request->phone;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $nameImage = time() . ' ' . $image->getClientOriginalName();
+            $request->image->move(public_path('Uploads/image/user'), $nameImage);
+            $user->image = $nameImage;
+        }
+        $user->save();
+    }
 }

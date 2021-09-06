@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserFormRequest;
 use App\Common\StatusCode;
 use App\Models\User;
+use Exception;
+use App\Http\Requests\UpdateUserFormRequest;
 
 class UserController extends Controller
 {
@@ -61,7 +63,7 @@ class UserController extends Controller
     {
         try {
             $user = User::showUser($id);
-            return $this->successResponse($user, StatusCode::CREATED);
+            return $this->successResponse($user, StatusCode::OK);
         } catch (Exception $e) {
             return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
         }
@@ -85,9 +87,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserFormRequest $request, $id)
     {
-        //
+        try {
+            $user = User::updateUser($request, $id);
+            return $this->successResponse(null, StatusCode::CREATED);
+        } catch (Exception $e) {
+            return $this->errorResponse($e . ' Error', StatusCode::BAD_REQUEST);
+        }
     }
 
     /**
