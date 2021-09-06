@@ -33,3 +33,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:api', 'admin']], funct
     Route::resource('users', 'Admin\UserController');
     Route::post('users/{id}', 'Admin\UserController@update');
 });
+Route::group(['prefix' => 'user', 'middleware' => ['auth:api', 'user']], function () {
+    Route::get('categories', 'User\CategoryController@index');
+});

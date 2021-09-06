@@ -22,6 +22,11 @@ class Category extends Model
     {
         return $this->morphOne(Log::class, 'logable');
     }
+    public static function getCategories()
+    {
+        $categories = Category::with('words')->get();
+        return $categories;
+    }
     public static function createCategory($request)
     {
         $category = new Category();
