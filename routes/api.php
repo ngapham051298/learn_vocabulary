@@ -36,4 +36,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:api', 'admin']], funct
 Route::group(['prefix' => 'user', 'middleware' => ['auth:api', 'user']], function () {
     Route::get('categories', 'User\CategoryController@index');
     Route::get('words', 'User\WordController@index');
+    Route::post('lessons', 'User\LessonController@store');
 });
