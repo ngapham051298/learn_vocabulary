@@ -37,4 +37,5 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth:api', 'user']], functio
     Route::get('categories', 'User\CategoryController@index');
     Route::get('words', 'User\WordController@index');
     Route::post('lessons', 'User\LessonController@store');
+    Route::put('lesson-results/{id}', 'User\LessonResultController@update');
 });
