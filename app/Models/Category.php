@@ -20,7 +20,7 @@ class Category extends Model
     }
     public function log()
     {
-        return $this->morphOne(Log::class, 'logable');
+        return $this->morphMany(Log::class, 'logable');
     }
     public static function getCategories()
     {

@@ -8,6 +8,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
 
 class User extends Authenticatable
 {
@@ -92,5 +94,11 @@ class User extends Authenticatable
     {
         $user = User::findOrFail($id);
         $user->delete();
+    }
+    public static function getActivitives()
+    {
+        $user = Auth::user();
+        $user->logs;
+        return $user;
     }
 }
