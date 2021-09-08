@@ -21,7 +21,7 @@ Route::group(['prefix' => 'common'], function () {
     Route::post('register', 'Auth\RegisterController@create')->name('register');
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('profile', 'Auth\UserController@index')->name('getProfile');
-        Route::put('profile', 'Auth\UserController@update')->name('updateProfile');
+        Route::post('profile', 'Auth\UserController@update')->name('updateProfile');
         Route::put('change-password', 'Auth\ChangePasswordController@changePassword')->name('changePassword');
     });
 });
@@ -38,4 +38,5 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth:api', 'user']], functio
     Route::get('words', 'User\WordController@index');
     Route::post('lessons', 'User\LessonController@store');
     Route::put('lesson-results/{id}', 'User\LessonResultController@update');
+    Route::get('lessons/{id}', 'User\LessonController@show');
 });

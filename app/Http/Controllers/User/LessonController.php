@@ -24,4 +24,13 @@ class LessonController extends Controller
             return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
         }
     }
+    public function show($id)
+    {
+        try {
+            $lesson = Lesson::showLesson($id);
+            return $this->successResponse($lesson, StatusCode::OK);
+        } catch (Exception $e) {
+            return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
+        }
+    }
 }

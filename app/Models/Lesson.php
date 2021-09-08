@@ -39,7 +39,8 @@ class Lesson extends Model
         foreach ($words as $item) {
             $lesson_result = [
                 'word_id' => $item['id'],
-                'lesson_id' => $lesson->id
+                'lesson_id' => $lesson->id,
+                'status' => 0
             ];
             array_push($lesson_results, $lesson_result);
         }
@@ -48,5 +49,12 @@ class Lesson extends Model
             ->where('id', $lesson->id)
             ->get();
         return $final_lesson;
+    }
+    public static function showLesson($id)
+    {
+        $lesson = Lesson::where('id', $id)
+            ->with(['lesson_results', 'lesson_results.word', 'lesson_results.answer'])
+            ->first();
+        return $lesson;
     }
 }
