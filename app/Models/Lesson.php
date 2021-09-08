@@ -49,4 +49,11 @@ class Lesson extends Model
             ->get();
         return $final_lesson;
     }
+    public static function showLesson($id)
+    {
+        $lesson = Lesson::where('id', $id)
+            ->with(['lesson_results', 'lesson_results.word', 'lesson_results.answer'])
+            ->first();
+        return $lesson;
+    }
 }
