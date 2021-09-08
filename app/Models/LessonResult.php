@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LessonResult extends Model
 {
+    protected $hidden = ['created_at', 'updated_at'];
     public function answer()
     {
         return $this->belongsTo(Answer::class);
