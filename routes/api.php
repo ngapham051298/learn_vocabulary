@@ -13,9 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+
 Route::group(['prefix' => 'common'], function () {
     Route::post('login', 'Auth\LoginController@login')->name('login');
     Route::post('register', 'Auth\RegisterController@create')->name('register');
@@ -39,4 +37,5 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth:api', 'user']], functio
     Route::post('lessons', 'User\LessonController@store');
     Route::put('lesson-results/{id}', 'User\LessonResultController@update');
     Route::get('lessons/{id}', 'User\LessonController@show');
+    Route::get('activitives', 'User\UserController@index');
 });

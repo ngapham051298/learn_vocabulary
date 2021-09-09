@@ -11,7 +11,8 @@ class Word extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
-    protected $hidden = ['pivot', 'created_at', 'updated_at', 'deleted_at'];
+
+
     public function answers()
     {
         return $this->hasMany(Answer::class);

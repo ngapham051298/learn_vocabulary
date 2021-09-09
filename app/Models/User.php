@@ -8,6 +8,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
 
 class User extends Authenticatable
 {
@@ -57,10 +59,12 @@ class User extends Authenticatable
         $user->password = $request->password;
         $user->gender = $request->gender;
         $user->phone = $request->phone;
-        $image = $request->file('image');
-        $nameImage = time() . ' ' . $image->getClientOriginalName();
-        $request->image->move(public_path('Uploads/image/user'), $nameImage);
-        $user->image = $nameImage;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $nameImage = time() . '_' . $image->getClientOriginalName();
+            $request->image->move(public_path('Uploads/image/user'), $nameImage);
+            $user->image = $nameImage;
+        }
         $user->save();
     }
     public static function getUsers()
@@ -92,5 +96,11 @@ class User extends Authenticatable
     {
         $user = User::findOrFail($id);
         $user->delete();
+    }
+    public static function getActivitives()
+    {
+        $user = Auth::user();
+        $user->logs;
+        return $user;
     }
 }

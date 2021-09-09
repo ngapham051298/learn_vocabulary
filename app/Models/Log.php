@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Log extends Model
 {
+    protected $guarded = ['id'];
+    protected $hidden = ['updated_at'];
     public function user()
     {
         return $this->belongsTo(User::class);

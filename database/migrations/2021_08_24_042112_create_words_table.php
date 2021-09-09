@@ -18,6 +18,7 @@ class CreateWordsTable extends Migration
             $table->string('name');
             $table->string('audio');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

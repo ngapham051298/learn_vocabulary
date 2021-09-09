@@ -45,6 +45,14 @@ class Lesson extends Model
             array_push($lesson_results, $lesson_result);
         }
         LessonResult::insert($lesson_results);
+        $countword = LessonResult::where('lesson_id', $lesson->id)
+            ->select('word_id')
+            ->count();
+        $category  = Category::findOrFail($request->category_id);
+        $category->log()->create([
+            'user_id' => Auth::user()->id,
+            'content' => "Learn " . $countword . " words"
+        ]);
         $final_lesson = Lesson::with(['lesson_results', 'lesson_results.word', 'lesson_results.word.answers'])
             ->where('id', $lesson->id)
             ->get();
