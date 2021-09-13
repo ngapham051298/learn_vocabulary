@@ -47,9 +47,16 @@ class LoginController extends Controller
             $email = $request->input('email');
             $password = $request->input('password');
             if (Auth::attempt(['email' => $email, 'password' => $password])) {
-                $user = Auth::user();
-                $token = Auth::user()->createToken('MyApp')->accessToken;
-                return $this->successResponse([$user, $token], StatusCode::CREATED);
+                $user = [
+                    'id' => Auth::user()->id,
+                    'name' => Auth::user()->name,
+                    'email' => Auth::user()->email,
+                    'image' => Auth::user()->image,
+                    'gender' => Auth::user()->gender,
+                    'phone' => Auth::user()->phone,
+                    'token' => Auth::user()->createToken('MyApp')->accessToken
+                ];
+                return $this->successResponse($user, StatusCode::CREATED);
             } else {
                 return $this->errorResponse('UnAuthorised', StatusCode::UNAUTHORIZED);
             }
