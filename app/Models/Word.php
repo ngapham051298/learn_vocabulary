@@ -11,8 +11,7 @@ class Word extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
-
-
+    protected $hidden = ['pivot', 'created_at', 'updated_at', 'deleted_at'];
     public function answers()
     {
         return $this->hasMany(Answer::class);
@@ -29,10 +28,11 @@ class Word extends Model
     {
         $word = new Word();
         $audio   = $request->file('audio');
-        $audioName = time() . ' ' . $audio->getClientOriginalName();
-        $request->audio->move(public_path('Uploads/audio'), $audioName);
+        $audioName = time() . '_' . $audio->getClientOriginalName();
+        $request->audio->move(public_path('uploads/audio'), $audioName);
+        $path = "/uploads/audio/$audioName";
         $word->name = $request->name;
-        $word->audio = $audioName;
+        $word->audio = $path;
         $word->save();
         $word->categories()->attach($request->category_ids);
         $answers = [];
@@ -74,9 +74,10 @@ class Word extends Model
         $word->name = $request->name;
         if ($request->hasFile('audio')) {
             $audio   = $request->file('audio');
-            $audioName = time() . ' ' . $audio->getClientOriginalName();
-            $request->audio->move(public_path('Uploads/audio'), $audioName);
-            $word->audio = $audioName;
+            $audioName = time() . '_' . $audio->getClientOriginalName();
+            $request->audio->move(public_path('uploads/audio'), $audioName);
+            $path = "/uploads/audio/$audioName";
+            $word->audio = $path;
         }
         $word->save();
         $word->categories()->sync($request->category_ids);
