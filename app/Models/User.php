@@ -62,8 +62,9 @@ class User extends Authenticatable
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $nameImage = time() . '_' . $image->getClientOriginalName();
-            $request->image->move(public_path('Uploads/image/user'), $nameImage);
-            $user->image = $nameImage;
+            $request->image->move(public_path('uploads/image/user'), $nameImage);
+            $path = "/uploads/image/user/$nameImage";
+            $user->image = $path;
         }
         $user->save();
     }
@@ -86,9 +87,10 @@ class User extends Authenticatable
         $user->phone = $request->phone;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $nameImage = time() . ' ' . $image->getClientOriginalName();
-            $request->image->move(public_path('Uploads/image/user'), $nameImage);
-            $user->image = $nameImage;
+            $nameImage = time() . '_' . $image->getClientOriginalName();
+            $request->image->move(public_path('uploads/image/user'), $nameImage);
+            $path = "/uploads/image/user/$nameImage";
+            $user->image = $path;
         }
         $user->save();
     }
