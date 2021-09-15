@@ -32,9 +32,10 @@ class Category extends Model
         $category = new Category();
         $image   = $request->file('image');
         $imageName = time() . '_' . $image->getClientOriginalName();
-        $request->image->move(public_path('Uploads/image'), $imageName);
+        $request->image->move(public_path('uploads/image/category'), $imageName);
+        $path = "/uploads/image/category/$imageName";
         $category->name = $request->name;
-        $category->image = $imageName;
+        $category->image = $path;
         $category->save();
     }
     public static function updateCategory($request, $id)
@@ -43,9 +44,10 @@ class Category extends Model
         $category->name = $request->name;
         if ($request->hasFile('image')) {
             $image   = $request->file('image');
-            $imageName = time() . ' ' . $image->getClientOriginalName();
-            $request->image->move(public_path('Uploads/image'), $imageName);
-            $category->image = $imageName;
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $request->image->move(public_path('uploads/image/category'), $imageName);
+            $path = "/uploads/image/category/$imageName";
+            $category->image = $path;
         }
         $category->save();
     }
