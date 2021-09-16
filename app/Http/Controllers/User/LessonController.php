@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Lesson;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LessonFormRequest;
+use App\Http\Resources\Lesson as LessonResources;
 
 class LessonController extends Controller
 {
@@ -27,7 +28,7 @@ class LessonController extends Controller
     public function show($id)
     {
         try {
-            $lesson = Lesson::showLesson($id);
+            $lesson = new LessonResources(Lesson::showLesson($id));
             return $this->successResponse($lesson, StatusCode::OK);
         } catch (Exception $e) {
             return $this->errorResponse($e . 'Error', StatusCode::BAD_REQUEST);
