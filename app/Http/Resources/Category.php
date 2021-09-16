@@ -18,7 +18,7 @@ class Category extends JsonResource
         return [
             'name' => $this->name,
             'image' => request()->getSchemeAndHttpHost() . $this->image,
-            'words' =>   Word::collection($this->words)
+            'words' =>  Word::collection($this->words)
         ];
     }
 }
