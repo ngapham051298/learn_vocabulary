@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Word;
 use App\Http\Resources\Answer;
 
 class LessonResult extends JsonResource
@@ -18,7 +17,8 @@ class LessonResult extends JsonResource
     {
         return [
             'status' => $this->status,
-            'word' => new Word($this->word),
+            'word_name' => $this->word->name,
+            'word_audio' => $request->getSchemeAndHttpHost() . $this->word->audio,
             'answer' => new Answer($this->answer),
         ];
     }

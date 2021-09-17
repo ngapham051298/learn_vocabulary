@@ -16,9 +16,10 @@ class Category extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'image' => request()->getSchemeAndHttpHost() . $this->image,
-            'words' =>   Word::collection($this->words)
+            'words' =>  Word::collection($this->words)
         ];
     }
 }

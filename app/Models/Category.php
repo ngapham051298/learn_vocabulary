@@ -53,7 +53,7 @@ class Category extends Model
     }
     public static function userGetCategories()
     {
-        $categories = Category::with('words:name')->get();
+        $categories = Category::with('words:name,audio')->get();
         return $categories;
     }
 }

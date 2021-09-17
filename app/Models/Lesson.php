@@ -61,7 +61,7 @@ class Lesson extends Model
     public static function showLesson($id)
     {
         $lesson = Lesson::where('id', $id)
-            ->with(['lesson_results', 'lesson_results.word', 'lesson_results.answer'])
+            ->with('lesson_results')
             ->first();
         return $lesson;
     }

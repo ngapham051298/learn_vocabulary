@@ -16,6 +16,7 @@ class Log extends JsonResource
     {
         return [
             'content' => $this->content,
+            'logable_id' => $this->logable_id,
             'logable_type' => $this->logable_type,
             'created_at' => $this->created_at
         ];
