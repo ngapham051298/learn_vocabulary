@@ -48,10 +48,9 @@ class LoginController extends Controller
             $password = $request->input('password');
             if (Auth::attempt(['email' => $email, 'password' => $password])) {
                 $user = [
-                    'id' => Auth::user()->id,
                     'name' => Auth::user()->name,
                     'email' => Auth::user()->email,
-                    'image' => Auth::user()->image,
+                    'image' => request()->getSchemeAndHttpHost() . Auth::user()->image,
                     'gender' => Auth::user()->gender,
                     'phone' => Auth::user()->phone,
                     'token' => Auth::user()->createToken('MyApp')->accessToken

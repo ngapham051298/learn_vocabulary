@@ -13,7 +13,13 @@ class UserController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $user = [
+            'name' => Auth::user()->name,
+            'email' => Auth::user()->email,
+            'image' => request()->getSchemeAndHttpHost() . Auth::user()->image,
+            'gender' => Auth::user()->gender,
+            'phone' => Auth::user()->phone,
+        ];
         return $this->successResponse($user, StatusCode::OK);
     }
     public function update(UpdateUserFormRequest $request)

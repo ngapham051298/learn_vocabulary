@@ -51,4 +51,9 @@ class Category extends Model
         }
         $category->save();
     }
+    public static function userGetCategories()
+    {
+        $categories = Category::with('words:name')->get();
+        return $categories;
+    }
 }

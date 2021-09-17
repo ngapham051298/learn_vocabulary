@@ -95,4 +95,35 @@ class Word extends Model
         $word->answers()->delete();
         $word->delete();
     }
+    public static function userGetWords($request)
+    {
+        if ($request->type == "learned") {
+            $words = Word::join('category_word as cw', 'words.id', 'cw.word_id')
+                ->join('categories as c', 'c.id', 'cw.category_id')
+                ->where('c.id', $request->category_id)
+                ->whereIn('words.id', ['lesson_results.word_id'])
+                ->join('answers as a', 'words.id', 'a.word_id')
+                ->where('a.status', 1)
+                ->select('words.name', 'a.title')
+                ->get();
+        } elseif ($request->type == "not_learned") {
+            $words = Word::join('category_word as cw', 'words.id', 'cw.word_id')
+                ->join('categories as c', 'c.id', 'cw.category_id')
+                ->where('c.id', $request->category_id)
+                ->whereNotIn('words.id', ['lesson_results.word_id'])
+                ->join('answers as a', 'words.id', 'a.word_id')
+                ->where('a.status', 1)
+                ->select('words.name', 'a.title',)
+                ->get();
+        } elseif ($request->type == "all") {
+            $words = Word::join('category_word as cw', 'words.id', 'cw.word_id')
+                ->join('categories as c', 'c.id', 'cw.category_id')
+                ->where('c.id', $request->category_id)
+                ->join('answers as a', 'words.id', 'a.word_id')
+                ->where('a.status', 1)
+                ->select('words.name', 'a.title')
+                ->get();
+        }
+        return $words;
+    }
 }
